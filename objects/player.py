@@ -1,5 +1,6 @@
 import pygame as pg
 from objects.ghost import Ghost
+from objects.wall import Wall
 
 
 class Player(Ghost):
@@ -63,15 +64,16 @@ class Player(Ghost):
     def check_collide(self, rect):
         return self.rect.colliderect(rect)
 
-    def collide_walls(self, walls):
-        self.rect.x += self.speed_x
-        self.rect.y += self.speed_y
-        for i in range(len(walls)):
-            if self.check_collide(walls[i]):
-                self.rect.x = self.prev_posx
-                self.rect.y = self.prev_posy
-                self.move_stop()
-                break
+    def collides_with(self, obj):
+        if isinstance(obj, list) and isinstance(obj[0], Wall):
+            self.rect.x += self.speed_x
+            self.rect.y += self.speed_y
+            for i in range(len(obj)):
+                if self.check_collide(obj[i]):
+                    self.rect.x = self.prev_posx
+                    self.rect.y = self.prev_posy
+                    self.move_stop()
+                    break
 
     def process_draw(self):
         self.prev_posx = self.rect.x

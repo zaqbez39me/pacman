@@ -625,7 +625,7 @@ def main():
               Ghost('RGHOST.png', size, screen)]
     player = Player('pacman_0.png', size, screen)
     lives = Lives(size, screen)
-    print(type(walls))
+
     while not game_over:
         for event in pg.event.get():
             if event.type == pg.QUIT:
