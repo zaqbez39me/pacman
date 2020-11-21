@@ -3,8 +3,8 @@ from objects.ghost import Ghost
 
 
 class Player(Ghost):
-    def __init__(self, drawing, size, screen):
-        Ghost.__init__(self, drawing, size, screen)
+    def __init__(self, game, drawing):
+        Ghost.__init__(self, game, drawing)
         self.img = pg.image.load(drawing)
         self.width = 50
         self.height = 50
@@ -26,7 +26,7 @@ class Player(Ghost):
             self.current_shift_y = 0
         else:
             self.current_shift_x = 0
-        self.img = pg.image.load('pacman_0.png')
+        self.img = pg.image.load('images/pacman_0.png')
         self.img = pg.transform.scale(self.img, (self.width, self.height))
 
     def move_left(self):
@@ -35,7 +35,7 @@ class Player(Ghost):
             self.current_shift_y = 0
         else:
             self.current_shift_x = 0
-        self.img = pg.image.load('pacman_180.png')
+        self.img = pg.image.load('images/pacman_180.png')
         self.img = pg.transform.scale(self.img, (self.width, self.height))
 
     def move_up(self):
@@ -44,7 +44,7 @@ class Player(Ghost):
             self.current_shift_x = 0
         else:
             self.current_shift_y = 0
-        self.img = pg.image.load('pacman_90.png')
+        self.img = pg.image.load('images/pacman_90.png')
         self.img = pg.transform.scale(self.img, (self.width, self.height))
 
     def move_down(self):
@@ -53,7 +53,7 @@ class Player(Ghost):
             self.current_shift_x = 0
         else:
             self.current_shift_y = 0
-        self.img = pg.image.load('pacman_270.png')
+        self.img = pg.image.load('images/pacman_270.png')
         self.img = pg.transform.scale(self.img, (self.width, self.height))
 
     def move_stop(self):
@@ -73,9 +73,9 @@ class Player(Ghost):
                 self.move_stop()
                 break
 
-    def draw(self):
+    def process_draw(self):
         self.prev_posx = self.rect.x
         self.prev_posy = self.rect.y
         self.rect.x = self.rect.x + self.current_shift_x
         self.rect.y = self.rect.y + self.current_shift_y
-        self.screen.blit(self.img, self.rect)
+        self.game.screen.blit(self.img, self.rect)
