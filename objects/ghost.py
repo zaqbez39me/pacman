@@ -3,9 +3,8 @@ import random
 
 
 class Ghost:
-    def __init__(self, drawing, size, screen):
-        self.size = size
-        self.screen = screen
+    def __init__(self, game, drawing):
+        self.game = game
         self.img = pg.image.load(drawing)
         self.width = 50
         self.height = 50
@@ -440,5 +439,5 @@ class Ghost:
                     self.speed_x = -speed
                     self.speed_y = 0
 
-    def draw(self):
-        self.screen.blit(self.img, self.rect)
+    def process_draw(self):
+        self.game.screen.blit(self.img, self.rect)
