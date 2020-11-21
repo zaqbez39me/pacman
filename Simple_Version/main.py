@@ -472,7 +472,7 @@ class Ghost:
 
 
 class Lives:
-    MAX_LIFES = 2
+    MAX_LIVES = 2
 
     def __init__(self, size, screen):
         self.screen = screen
@@ -554,15 +554,16 @@ class Player(Ghost):
     def check_collide(self, rect):
         return self.rect.colliderect(rect)
 
-    def collide_walls(self, walls):
-        self.rect.x += self.speed_x
-        self.rect.y += self.speed_y
-        for i in range(len(walls)):
-            if self.check_collide(walls[i]):
-                self.rect.x = self.prev_posx
-                self.rect.y = self.prev_posy
-                self.move_stop()
-                break
+    def collides_with(self, obj):
+        if isinstance(obj, list) and isinstance(obj[0], Wall):
+            self.rect.x += self.speed_x
+            self.rect.y += self.speed_y
+            for i in range(len(obj)):
+                if self.check_collide(obj[i]):
+                    self.rect.x = self.prev_posx
+                    self.rect.y = self.prev_posy
+                    self.move_stop()
+                    break
 
     def draw(self):
         self.prev_posx = self.rect.x
@@ -624,6 +625,7 @@ def main():
               Ghost('RGHOST.png', size, screen)]
     player = Player('pacman_0.png', size, screen)
     lives = Lives(size, screen)
+    print(type(walls))
     while not game_over:
         for event in pg.event.get():
             if event.type == pg.QUIT:
@@ -644,10 +646,10 @@ def main():
         clock.tick(60)
         screen.fill((0, 0, 0))
         seconds = (pg.time.get_ticks() - start_ticks) / 1000
-        for i in range(4):
+        for i in range(len(ghosts)):
             ghosts[i].move(seconds)
             ghosts[i].draw()
-        player.collide_walls(walls)
+        player.collides_with(walls)
         player.draw()
         lives.draw()
         seconds = (pg.time.get_ticks() - start_ticks) / 1000
