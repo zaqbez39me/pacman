@@ -17,6 +17,9 @@ class Wall:
         self.width = width
         self.height = height
 
+    def process_logic(self):
+        pass
+
     def process_draw(self):
         self.game.screen.blit(self.img, self.rect)
 

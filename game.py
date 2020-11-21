@@ -6,7 +6,7 @@ from scenes.overlay import OverlayScene
 
 
 class Game:
-    SIZE = WIDTH, HEIGHT = 800, 600
+    SIZE = WIDTH, HEIGHT = 800, 630
     MENU_SCENE_INDEX = 0
     MAIN_SCENE_INDEX = 1
     GAMEOVER_SCENE_INDEX = 2
@@ -71,7 +71,7 @@ class Game:
             self.process_all_events()
             self.process_all_logic()
             self.process_all_draw()
-            pygame.time.wait(10)
+            pygame.time.wait(40)
 
     def set_scene(self, index: int, resume: bool = False) -> None:
         if not resume:

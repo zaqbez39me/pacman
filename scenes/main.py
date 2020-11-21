@@ -9,11 +9,13 @@ from scenes import BaseScene
 
 
 class MainScene(BaseScene):
+    INITIAL_WALLS_COUNT = 83
+
     def create_objects(self) -> None:
-        self.player = Player(self.game, 'pacman_0.png')
+        self.player = Player(self.game, 'images/pacman_0.png')
         self.lives = Lives(self.game)
-        self.ghosts = [Ghost(self.game, 'YGHOST.png'), Ghost(self.game, 'BGHOST.png'),
-                       Ghost(self.game, 'pygameHOST.png'), Ghost(self.game, 'RGHOST.png')]
+        self.ghosts = [Ghost(self.game, 'images/YGHOST.png'), Ghost(self.game, 'images/BGHOST.png'),
+                       Ghost(self.game, 'images/PGHOST.png'), Ghost(self.game, 'images/RGHOST.png')]
         self.walls = [Wall(self.game, 375, 260, 50, 20), Wall(self.game, 460, 510, 270, 20),
                       Wall(self.game, 460, 490, 270, 20), Wall(self.game, 460, 470, 270, 20),
                       Wall(self.game, 70, 510, 270, 20), Wall(self.game, 70, 490, 270, 20),
@@ -57,9 +59,7 @@ class MainScene(BaseScene):
                       Wall(self.game, 270, 170, 70, 20), Wall(self.game, 270, 190, 70, 20),
                       Wall(self.game, 460, 170, 70, 20), Wall(self.game, 460, 190, 70, 20)]
         
-        self.objects = self.ghosts + self.walls
-        self.objects.append(self.lives)
-        self.objects.append(self.player)
+        self.objects = self.walls + self.ghosts + [self.player, self.lives]
 
     def process_event(self, event: pygame.event.Event) -> None:
         if event.type == pygame.KEYDOWN:
@@ -75,14 +75,28 @@ class MainScene(BaseScene):
                 self.game.set_scene(self.game.PAUSE_SCENE_INDEX)
 
     def on_activate(self) -> None:
-        self.reset_balls_position()
-        self.set_random_unique_position()
-        self.status_text.update_text(self.get_collisions_text())
-        self.status_text.move(10, 10)
+        self.create_objects()
+        self.start_ticks = pygame.time.get_ticks()
+
+    def time_from_activation(self):
+        return (pygame.time.get_ticks() - self.start_ticks) / 1000
 
     def check_game_over(self) -> None:
-        if self.collision_count >= MainScene.MAX_COLLISIONS:
-            self.game.set_scene(self.game.GAMEOVER_SCENE_INDEX)
+        # if self.collision_count >= MainScene.MAX_COLLISIONS:
+        #     self.game.set_scene(self.game.GAMEOVER_SCENE_INDEX)
+        pass
+
+    def ghosts_logic(self):
+        if self.time_from_activation() > 3:
+            if len(self.walls) == self.INITIAL_WALLS_COUNT:
+                self.walls = self.walls[1:]
+                self.objects = self.walls + self.ghosts + [self.player, self.lives]
+
+            for item in self.ghosts:
+                item.move()
 
     def additional_logic(self) -> None:
         self.check_game_over()
+        self.player.collides_with(self.walls)
+        self.ghosts_logic()
+

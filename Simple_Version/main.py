@@ -646,17 +646,21 @@ def main():
         clock.tick(60)
         screen.fill((0, 0, 0))
         seconds = (pg.time.get_ticks() - start_ticks) / 1000
+
         for i in range(len(ghosts)):
             ghosts[i].move(seconds)
             ghosts[i].draw()
+
         player.collides_with(walls)
         player.draw()
         lives.draw()
+
         seconds = (pg.time.get_ticks() - start_ticks) / 1000
         if seconds > 3 and len(walls) == 83:
             walls = walls[1:]
         for i in range(len(walls)):
             walls[i].draw()
+
         pg.display.flip()
         pg.time.wait(40)
     print("Вы проиграли")
