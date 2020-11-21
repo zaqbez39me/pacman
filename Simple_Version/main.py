@@ -600,8 +600,6 @@ def main():
                 screen = pg.display.set_mode(screen_size, pg.RESIZABLE)
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_d:
-                    Player1.rect.x += 5
-                    for i in range(len(walls)):
                         motion = "RIGHT"
                 elif event.key == pygame.K_a:
                         motion = "LEFT"
