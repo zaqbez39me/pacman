@@ -217,33 +217,19 @@ class Ghost:
                 del n
         if self.rect.y == 275:
             if self.rect.x == 160:
-                n = random.randint(0, 2)
+                n = random.randint(0, 1)
                 if n == 0:
                     self.speed_y = -speed
                     self.speed_x = 0
-                elif n == 1:
-                    self.speed_x = -speed
-                    self.speed_y = 0
                 else:
                     self.speed_y = speed
                     self.speed_x = 0
                 del n
-            elif self.rect.x == -50:
-                self.rect.x = 800
-                self.speed_y = 0
-                self.speed_x = -speed
-            elif self.rect.x == 850:
-                self.rect.x = -50
-                self.speed_y = 0
-                self.speed_x = speed
             elif self.rect.x == 590:
-                n = random.randint(0, 2)
+                n = random.randint(0, 1)
                 if n == 0:
                     self.speed_y = -speed
                     self.speed_x = 0
-                elif n == 1:
-                    self.speed_x = speed
-                    self.speed_y = 0
                 else:
                     self.speed_y = speed
                     self.speed_x = 0

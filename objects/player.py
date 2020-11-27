@@ -82,10 +82,16 @@ class Player(Ghost):
             if self.check_collision(obj.rect):
                 self.is_dead = True
                 self.lives.lives -= 1
+    def check_tunnel(self):
+        if self.rect.x == -50 and self.current_shift_x == -5:
+            self.rect.x = 800
+        elif self.rect.x == 800 and self.current_shift_x == 5:
+            self.rect.x = -50
+        self.rect.x = self.rect.x + self.current_shift_x
+        self.rect.y = self.rect.y + self.current_shift_y
     def process_draw(self):
         self.prev_pos_x = self.rect.x
         self.prev_pos_y = self.rect.y
-        self.rect.x = self.rect.x + self.current_shift_x
-        self.rect.y = self.rect.y + self.current_shift_y
+        self.check_tunnel()
         self.game.screen.blit(self.img, self.rect)
         self.lives.process_draw()
