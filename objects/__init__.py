@@ -6,4 +6,6 @@ from .ghost import Ghost
 from .player import Player
 from .wall import Wall
 from .lives import Lives
-
+from .seed import Seed
+from .crossroad import Crossroad
+from .road import Road
