@@ -4,12 +4,27 @@ from typing import Tuple
 import pygame
 
 from constants import Color
-from objects import BallObject, TextObject, Wall, Player, Ghost, Seed
+from objects import BallObject, TextObject, Wall, Player, Ghost, Seed, Crossroad, Road
 from scenes import BaseScene
 
 
 class MainScene(BaseScene):
     INITIAL_WALLS_COUNT = 83
+
+    def generate_seeds(self):
+        seeds = []
+        for road in self.roads:
+            seeds.append(Seed(self.game, road.lx, road.ly))
+            seeds.append(Seed(self.game, road.rx, road.ry))
+
+            if road.len_x() > 0:
+                for x in range(road.lx + road.step, road.rx - Seed.DIAMETER, road.step):
+                    seeds.append(Seed(self.game, x, road.ly))
+            elif road.len_y() > 0:
+                for y in range(road.ly + road.step, road.ry - Seed.DIAMETER, road.step):
+                    seeds.append(Seed(self.game, road.lx, y))
+
+        return seeds
 
     def create_objects(self) -> None:
         self.player = Player(self.game, 'images/pacman_0.png')
@@ -57,8 +72,42 @@ class MainScene(BaseScene):
                       Wall(self.game, 740, 190, 20, 65), Wall(self.game, 760, 190, 20, 65),
                       Wall(self.game, 270, 170, 70, 20), Wall(self.game, 270, 190, 70, 20),
                       Wall(self.game, 460, 170, 70, 20), Wall(self.game, 460, 190, 70, 20)]
-        
-        self.objects = self.walls + self.ghosts + [self.player]
+
+        self.crossroads = [Crossroad(46, 48), Crossroad(184, 48), Crossroad(365, 48), Crossroad(435, 48),
+                           Crossroad(615, 48), Crossroad(758, 48), Crossroad(46, 150), Crossroad(184, 150),
+                           Crossroad(365, 150), Crossroad(435, 150), Crossroad(615, 150), Crossroad(758, 150),
+                           Crossroad(296, 238), Crossroad(365, 238), Crossroad(435, 238), Crossroad(508, 238),
+                           Crossroad(18, 300), Crossroad(184, 300), Crossroad(615, 300), Crossroad(775, 300),
+                           Crossroad(184, 376), Crossroad(296, 376), Crossroad(508, 376), Crossroad(615, 376),
+                           Crossroad(46, 446), Crossroad(184, 446), Crossroad(296, 446), Crossroad(365, 446),
+                           Crossroad(435, 446), Crossroad(508, 446), Crossroad(615, 446), Crossroad(758, 446),
+                           Crossroad(46, 556), Crossroad(365, 556), Crossroad(435, 556), Crossroad(758, 556)]
+        self.roads = [Road(self.crossroads[0], self.crossroads[1]), Road(self.crossroads[1], self.crossroads[2]),
+                      Road(self.crossroads[3], self.crossroads[4]), Road(self.crossroads[4], self.crossroads[5]),
+                      Road(self.crossroads[6], self.crossroads[7]), Road(self.crossroads[7], self.crossroads[8]),
+                      Road(self.crossroads[9], self.crossroads[10]), Road(self.crossroads[10], self.crossroads[11]),
+                      Road(self.crossroads[12], self.crossroads[13]), Road(self.crossroads[13], self.crossroads[14]),
+                      Road(self.crossroads[14], self.crossroads[15]), Road(self.crossroads[16], self.crossroads[17]),
+                      Road(self.crossroads[18], self.crossroads[19]), Road(self.crossroads[20], self.crossroads[21]),
+                      Road(self.crossroads[21], self.crossroads[22]), Road(self.crossroads[22], self.crossroads[23]),
+                      Road(self.crossroads[24], self.crossroads[25]), Road(self.crossroads[26], self.crossroads[27]),
+                      Road(self.crossroads[28], self.crossroads[29]), Road(self.crossroads[30], self.crossroads[31]),
+                      Road(self.crossroads[32], self.crossroads[33]), Road(self.crossroads[34], self.crossroads[35]),
+                      Road(self.crossroads[0], self.crossroads[6]), Road(self.crossroads[24], self.crossroads[32]),
+                      Road(self.crossroads[1], self.crossroads[7]), Road(self.crossroads[7], self.crossroads[17]),
+                      Road(self.crossroads[17], self.crossroads[20]), Road(self.crossroads[20], self.crossroads[25]),
+                      Road(self.crossroads[12], self.crossroads[21]), Road(self.crossroads[21], self.crossroads[26]),
+                      Road(self.crossroads[2], self.crossroads[8]), Road(self.crossroads[8], self.crossroads[13]),
+                      Road(self.crossroads[27], self.crossroads[33]), Road(self.crossroads[3], self.crossroads[9]),
+                      Road(self.crossroads[9], self.crossroads[14]), Road(self.crossroads[28], self.crossroads[34]),
+                      Road(self.crossroads[8], self.crossroads[9]), Road(self.crossroads[33], self.crossroads[34]),
+                      Road(self.crossroads[22], self.crossroads[29]), Road(self.crossroads[23], self.crossroads[30]),
+                      Road(self.crossroads[18], self.crossroads[23]), Road(self.crossroads[18], self.crossroads[10]),
+                      Road(self.crossroads[10], self.crossroads[4]), Road(self.crossroads[15], self.crossroads[22]),
+                      Road(self.crossroads[5], self.crossroads[11]), Road(self.crossroads[31], self.crossroads[35])]
+
+        self.seeds = self.generate_seeds()
+        self.objects = self.seeds + self.walls + self.ghosts + [self.player]
 
     def process_event(self, event: pygame.event.Event) -> None:
         if event.type == pygame.KEYDOWN:
@@ -89,7 +138,7 @@ class MainScene(BaseScene):
         if self.time_from_activation() > 3:
             if len(self.walls) == MainScene.INITIAL_WALLS_COUNT:
                 del self.walls[0]
-                self.objects = self.walls + self.ghosts + [self.player]
+                self.objects = self.seeds + self.walls + self.ghosts + [self.player]
 
             for item in self.ghosts:
                 item.move()
