@@ -4,7 +4,7 @@ from typing import Tuple
 import pygame
 
 from constants import Color
-from objects import BallObject, TextObject, Wall, Player, Ghost, Lives
+from objects import BallObject, TextObject, Wall, Player, Ghost, Seed
 from scenes import BaseScene
 
 
@@ -57,8 +57,10 @@ class MainScene(BaseScene):
                       Wall(self.game, 740, 190, 20, 65), Wall(self.game, 760, 190, 20, 65),
                       Wall(self.game, 270, 170, 70, 20), Wall(self.game, 270, 190, 70, 20),
                       Wall(self.game, 460, 170, 70, 20), Wall(self.game, 460, 190, 70, 20)]
+
+        self.seeds = [Seed(self.game, 100, 100), Seed(self.game, 100, 300)]
         
-        self.objects = self.walls + self.ghosts + [self.player]
+        self.objects = self.walls + self.ghosts + [self.player] + self.seeds
 
     def process_event(self, event: pygame.event.Event) -> None:
         if event.type == pygame.KEYDOWN:
@@ -89,7 +91,7 @@ class MainScene(BaseScene):
         if self.time_from_activation() > 3:
             if len(self.walls) == MainScene.INITIAL_WALLS_COUNT:
                 del self.walls[0]
-                self.objects = self.walls + self.ghosts + [self.player]
+                self.objects = self.walls + self.ghosts + [self.player] + self.seeds
 
             for item in self.ghosts:
                 item.move()
