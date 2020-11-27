@@ -5,6 +5,11 @@ from objects.lives import Lives
 
 
 class Player(Ghost):
+    def respawn(self):
+        self.rect.y = 530
+        self.rect.x = 375
+        self.is_dead = False
+
     def __init__(self, game, drawing, color):
         Ghost.__init__(self, game, drawing, color)
         self.img = pg.image.load(drawing)
@@ -14,8 +19,7 @@ class Player(Ghost):
         self.rect = self.img.get_rect()
         self.speed_x = 0
         self.speed_y = 0
-        self.rect.y = 530
-        self.rect.x = 375
+        self.respawn()
         self.pl_speed = 5
         self.current_shift_y = 0
         self.current_shift_x = 0
@@ -67,12 +71,17 @@ class Player(Ghost):
         return self.rect.colliderect(rect)
 
     def collides_with(self, obj):
-        if isinstance(obj, Wall):
+        if isinstance(obj, Player):
+            return
+        elif isinstance(obj, Wall):
             if self.check_collision(obj):
                 self.rect.x = self.prev_pos_x
                 self.rect.y = self.prev_pos_y
                 self.move_stop()
-
+        elif isinstance(obj, Ghost):
+            if self.check_collision(obj.rect):
+                self.is_dead = True
+                self.lives.lives -= 1
     def process_draw(self):
         self.prev_pos_x = self.rect.x
         self.prev_pos_y = self.rect.y

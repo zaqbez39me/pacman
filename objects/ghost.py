@@ -3,15 +3,7 @@ import random
 
 
 class Ghost:
-    def __init__(self, game, drawing, color):
-        self.angle = 0
-        self.color = color
-        self.game = game
-        self.img = pg.image.load(drawing)
-        self.width = 50
-        self.height = 50
-        self.img = pg.transform.scale(self.img, (self.width, self.height))
-        self.rect = self.img.get_rect()
+    def respawn(self):
         self.rect.x = random.randint(340, 410)
         self.rect.y = 280
         f = random.randint(0, 1)
@@ -22,9 +14,16 @@ class Ghost:
         del f
         self.speed_y = 0
 
-    def collides_with(self, obj):
-        if self.rect.colliderect(obj):
-            self.speed_y *= -1
+    def __init__(self, game, drawing, color):
+        self.angle = 0
+        self.color = color
+        self.game = game
+        self.img = pg.image.load(drawing)
+        self.width = 50
+        self.height = 50
+        self.img = pg.transform.scale(self.img, (self.width, self.height))
+        self.rect = self.img.get_rect()
+        self.respawn()
 
     def process_logic(self):
         pass

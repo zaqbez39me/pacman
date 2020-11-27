@@ -6,7 +6,7 @@ class Lives:
 
     def __init__(self, game):
         self.game = game
-        self.lives = 2
+        self.lives = Lives.MAX_LIVES
         self.img = pg.image.load('images/pacman_0.png')
         self.width = 30
         self.height = 30

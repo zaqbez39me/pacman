@@ -2,6 +2,7 @@ from random import randint
 from typing import Tuple
 
 import pygame
+import random
 
 from constants import Color
 from objects import BallObject, TextObject, Wall, Player, Ghost, Lives
@@ -10,6 +11,11 @@ from scenes import BaseScene
 
 class MainScene(BaseScene):
     INITIAL_WALLS_COUNT = 83
+
+    def move_to_spawn(self):
+        self.player.respawn()
+        for ghost in self.ghosts:
+            ghost.respawn()
 
     def create_objects(self) -> None:
         self.player = Player(self.game, 'images/pacman_0.png', "")
@@ -81,9 +87,8 @@ class MainScene(BaseScene):
         return (pygame.time.get_ticks() - self.start_ticks) / 1000
 
     def check_game_over(self) -> None:
-        # if self.collision_count >= MainScene.MAX_COLLISIONS:
-        #     self.game.set_scene(self.game.GAMEOVER_SCENE_INDEX)
-        pass
+        if self.player.lives.lives == 0:
+            self.game.set_scene(self.game.GAMEOVER_SCENE_INDEX)
 
     def ghosts_logic(self):
         if self.time_from_activation() > 3:
@@ -102,3 +107,5 @@ class MainScene(BaseScene):
         self.check_game_over()
         self.check_player_collisions()
         self.ghosts_logic()
+        if self.player.is_dead:
+            self.move_to_spawn()
