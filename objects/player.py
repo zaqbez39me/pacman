@@ -18,8 +18,8 @@ class Player(Ghost):
         self.pl_speed = 5
         self.current_shift_y = 0
         self.current_shift_x = 0
-        self.prev_posx = self.rect.x
-        self.prev_posy = self.rect.y
+        self.prev_pos_x = self.rect.x
+        self.prev_pos_y = self.rect.y
 
     def move_right(self):
         if self.rect.x < 780 - self.width:
@@ -61,23 +61,19 @@ class Player(Ghost):
         self.current_shift_x = 0
         self.current_shift_y = 0
 
-    def check_collide(self, rect):
+    def check_collision(self, rect):
         return self.rect.colliderect(rect)
 
     def collides_with(self, obj):
-        if isinstance(obj, list) and isinstance(obj[0], Wall):
-            self.rect.x += self.speed_x
-            self.rect.y += self.speed_y
-            for i in range(len(obj)):
-                if self.check_collide(obj[i]):
-                    self.rect.x = self.prev_posx
-                    self.rect.y = self.prev_posy
-                    self.move_stop()
-                    break
+        if isinstance(obj, Wall):
+            if self.check_collision(obj):
+                self.rect.x = self.prev_pos_x
+                self.rect.y = self.prev_pos_y
+                self.move_stop()
 
     def process_draw(self):
-        self.prev_posx = self.rect.x
-        self.prev_posy = self.rect.y
+        self.prev_pos_x = self.rect.x
+        self.prev_pos_y = self.rect.y
         self.rect.x = self.rect.x + self.current_shift_x
         self.rect.y = self.rect.y + self.current_shift_y
         self.game.screen.blit(self.img, self.rect)

@@ -88,15 +88,19 @@ class MainScene(BaseScene):
 
     def ghosts_logic(self):
         if self.time_from_activation() > 3:
-            if len(self.walls) == self.INITIAL_WALLS_COUNT:
-                self.walls = self.walls[1:]
+            if len(self.walls) == MainScene.INITIAL_WALLS_COUNT:
+                del self.walls[0]
                 self.objects = self.walls + self.ghosts + [self.player, self.lives]
 
             for item in self.ghosts:
                 item.move()
 
+    def check_player_collisions(self):
+        for item in self.objects:
+            self.player.collides_with(item)
+
     def additional_logic(self) -> None:
         self.check_game_over()
-        self.player.collides_with(self.walls)
+        self.check_player_collisions()
         self.ghosts_logic()
 
