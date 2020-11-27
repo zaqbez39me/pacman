@@ -70,7 +70,7 @@ class MainScene(BaseScene):
                 self.player.move_down()
             elif event.key == pygame.K_w:
                 self.player.move_up()
-            elif event.key == pygame.K_ESCAPE:
+            elif event.key == pygame.K_p:
                 self.game.set_scene(self.game.PAUSE_SCENE_INDEX)
 
     def on_activate(self) -> None:
