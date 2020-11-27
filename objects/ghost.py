@@ -4,7 +4,7 @@ import random
 
 class Ghost:
     def respawn(self):
-        self.rect.x = random.randint(340, 410)
+        self.rect.x = random.randint(341, 409)
         self.rect.y = 280
         f = random.randint(0, 1)
         if f == 0:
