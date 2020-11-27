@@ -12,9 +12,9 @@ class MainScene(BaseScene):
     INITIAL_WALLS_COUNT = 83
 
     def create_objects(self) -> None:
-        self.player = Player(self.game, 'images/pacman_0.png')
-        self.ghosts = [Ghost(self.game, 'images/YGHOST.png'), Ghost(self.game, 'images/BGHOST.png'),
-                       Ghost(self.game, 'images/PGHOST.png'), Ghost(self.game, 'images/RGHOST.png')]
+        self.player = Player(self.game, 'images/pacman_0.png', "")
+        self.ghosts = [Ghost(self.game, 'images/YGHOST_0.png', "yellow"), Ghost(self.game, 'images/BGHOST_0.png', "blue"),
+                       Ghost(self.game, 'images/PGHOST_0.png', "pink"), Ghost(self.game, 'images/RGHOST_0.png', "red")]
         self.walls = [Wall(self.game, 375, 260, 50, 20), Wall(self.game, 460, 510, 270, 20),
                       Wall(self.game, 460, 490, 270, 20), Wall(self.game, 460, 470, 270, 20),
                       Wall(self.game, 70, 510, 270, 20), Wall(self.game, 70, 490, 270, 20),

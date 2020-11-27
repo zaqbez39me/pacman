@@ -5,8 +5,8 @@ from objects.lives import Lives
 
 
 class Player(Ghost):
-    def __init__(self, game, drawing):
-        Ghost.__init__(self, game, drawing)
+    def __init__(self, game, drawing, color):
+        Ghost.__init__(self, game, drawing, color)
         self.img = pg.image.load(drawing)
         self.width = 50
         self.height = 50

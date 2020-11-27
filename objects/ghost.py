@@ -3,7 +3,9 @@ import random
 
 
 class Ghost:
-    def __init__(self, game, drawing):
+    def __init__(self, game, drawing, color):
+        self.angle = 0
+        self.color = color
         self.game = game
         self.img = pg.image.load(drawing)
         self.width = 50
@@ -442,4 +444,89 @@ class Ghost:
                 self.speed_y = 0
 
     def process_draw(self):
+        speed = 5
+        if self.color == "blue":
+            if self.speed_x > 0:
+                if self.angle != 0:
+                    self.img = pg.image.load('images/BGHOST_0.png')
+                    self.img = pg.transform.scale(self.img, (self.width, self.height))
+                    self.angle = 0
+            elif self.speed_x < 0:
+                if self.angle != 180:
+                    self.img = pg.image.load('images/BGHOST_180.png')
+                    self.img = pg.transform.scale(self.img, (self.width, self.height))
+                    self.angle = 180
+            elif self.speed_y > 0:
+                if self.angle != 270:
+                    self.img = pg.image.load('images/BGHOST_270.png')
+                    self.img = pg.transform.scale(self.img, (self.width, self.height))
+                    self.angle = 270
+            elif self.speed_y < 0:
+                if self.angle != 90:
+                    self.img = pg.image.load('images/BGHOST_90.png')
+                    self.img = pg.transform.scale(self.img, (self.width, self.height))
+                    self.angle = 90
+        elif self.color == "red":
+            if self.speed_x > 0:
+                if self.angle != 0:
+                    self.img = pg.image.load('images/RGHOST_0.png')
+                    self.img = pg.transform.scale(self.img, (self.width, self.height))
+                    self.angle = 0
+            elif self.speed_x < 0:
+                if self.angle != 180:
+                    self.img = pg.image.load('images/RGHOST_180.png')
+                    self.img = pg.transform.scale(self.img, (self.width, self.height))
+                    self.angle = 180
+            elif self.speed_y > 0:
+                if self.angle != 270:
+                    self.img = pg.image.load('images/RGHOST_270.png')
+                    self.img = pg.transform.scale(self.img, (self.width, self.height))
+                    self.angle = 270
+            elif self.speed_y < 0:
+                if self.angle != 90:
+                    self.img = pg.image.load('images/RGHOST_90.png')
+                    self.img = pg.transform.scale(self.img, (self.width, self.height))
+                    self.angle = 90
+        elif self.color == "pink":
+            if self.speed_x > 0:
+                if self.angle != 0:
+                    self.img = pg.image.load('images/PGHOST_0.png')
+                    self.img = pg.transform.scale(self.img, (self.width, self.height))
+                    self.angle = 0
+            elif self.speed_x < 0:
+                if self.angle != 180:
+                    self.img = pg.image.load('images/PGHOST_180.png')
+                    self.img = pg.transform.scale(self.img, (self.width, self.height))
+                    self.angle = 180
+            elif self.speed_y > 0:
+                if self.angle != 270:
+                    self.img = pg.image.load('images/PGHOST_270.png')
+                    self.img = pg.transform.scale(self.img, (self.width, self.height))
+                    self.angle = 270
+            elif self.speed_y < 0:
+                if self.angle != 90:
+                    self.img = pg.image.load('images/PGHOST_90.png')
+                    self.img = pg.transform.scale(self.img, (self.width, self.height))
+                    self.angle = 90
+        else:
+            if self.speed_x > 0:
+                if self.angle != 0:
+                    self.img = pg.image.load('images/YGHOST_0.png')
+                    self.img = pg.transform.scale(self.img, (self.width, self.height))
+                    self.angle = 0
+            elif self.speed_x < 0:
+                if self.angle != 180:
+                    self.img = pg.image.load('images/YGHOST_180.png')
+                    self.img = pg.transform.scale(self.img, (self.width, self.height))
+                    self.angle = 180
+            elif self.speed_y > 0:
+                if self.angle != 270:
+                    self.img = pg.image.load('images/YGHOST_270.png')
+                    self.img = pg.transform.scale(self.img, (self.width, self.height))
+                    self.angle = 270
+            elif self.speed_y < 0:
+                if self.angle != 90:
+                    self.img = pg.image.load('images/YGHOST_90.png')
+                    self.img = pg.transform.scale(self.img, (self.width, self.height))
+                    self.angle = 90
         self.game.screen.blit(self.img, self.rect)
