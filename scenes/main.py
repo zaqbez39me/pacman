@@ -130,8 +130,6 @@ class MainScene(BaseScene):
         return (pygame.time.get_ticks() - self.start_ticks) / 1000
 
     def check_game_over(self) -> None:
-        # if self.collision_count >= MainScene.MAX_COLLISIONS:
-        #     self.game.set_scene(self.game.GAMEOVER_SCENE_INDEX)
         pass
 
     def ghosts_logic(self):
