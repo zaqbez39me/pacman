@@ -1,6 +1,7 @@
 import pygame as pg
 from objects.ghost import Ghost
 from objects.wall import Wall
+from objects.lives import Lives
 
 
 class Player(Ghost):
@@ -20,6 +21,7 @@ class Player(Ghost):
         self.current_shift_x = 0
         self.prev_pos_x = self.rect.x
         self.prev_pos_y = self.rect.y
+        self.lives = Lives(self.game)
 
     def move_right(self):
         if self.rect.x < 780 - self.width:
@@ -77,3 +79,4 @@ class Player(Ghost):
         self.rect.x = self.rect.x + self.current_shift_x
         self.rect.y = self.rect.y + self.current_shift_y
         self.game.screen.blit(self.img, self.rect)
+        self.lives.process_draw()

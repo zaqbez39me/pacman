@@ -13,7 +13,6 @@ class MainScene(BaseScene):
 
     def create_objects(self) -> None:
         self.player = Player(self.game, 'images/pacman_0.png')
-        self.lives = Lives(self.game)
         self.ghosts = [Ghost(self.game, 'images/YGHOST.png'), Ghost(self.game, 'images/BGHOST.png'),
                        Ghost(self.game, 'images/PGHOST.png'), Ghost(self.game, 'images/RGHOST.png')]
         self.walls = [Wall(self.game, 375, 260, 50, 20), Wall(self.game, 460, 510, 270, 20),
@@ -59,7 +58,7 @@ class MainScene(BaseScene):
                       Wall(self.game, 270, 170, 70, 20), Wall(self.game, 270, 190, 70, 20),
                       Wall(self.game, 460, 170, 70, 20), Wall(self.game, 460, 190, 70, 20)]
         
-        self.objects = self.walls + self.ghosts + [self.player, self.lives]
+        self.objects = self.walls + self.ghosts + [self.player]
 
     def process_event(self, event: pygame.event.Event) -> None:
         if event.type == pygame.KEYDOWN:
@@ -90,7 +89,7 @@ class MainScene(BaseScene):
         if self.time_from_activation() > 3:
             if len(self.walls) == MainScene.INITIAL_WALLS_COUNT:
                 del self.walls[0]
-                self.objects = self.walls + self.ghosts + [self.player, self.lives]
+                self.objects = self.walls + self.ghosts + [self.player]
 
             for item in self.ghosts:
                 item.move()
@@ -103,4 +102,3 @@ class MainScene(BaseScene):
         self.check_game_over()
         self.check_player_collisions()
         self.ghosts_logic()
-

@@ -13,9 +13,6 @@ class Lives:
         self.img = pg.transform.scale(self.img, (self.width, self.height))
         self.rect = self.img.get_rect()
 
-    def process_logic(self):
-        pass
-
     def process_draw(self):
         x = 0
         y = 600
