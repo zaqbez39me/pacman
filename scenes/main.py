@@ -5,7 +5,7 @@ import pygame
 import random
 
 from constants import Color
-from objects import BallObject, TextObject, Wall, Player, Ghost, Seed, Crossroad, Road
+from objects import BallObject, TextObject, Wall, Player, Ghost, Seed, Crossroad, Road, Energizer
 from scenes import BaseScene
 
 
@@ -33,9 +33,9 @@ class MainScene(BaseScene):
         return seeds
 
     def create_objects(self) -> None:
-        self.player = Player(self.game, 'images/pacman_0.png', "")
-        self.ghosts = [Ghost(self.game, 'images/YGHOST_0.png', "yellow"), Ghost(self.game, 'images/BGHOST_0.png', "blue"),
-                       Ghost(self.game, 'images/PGHOST_0.png', "pink"), Ghost(self.game, 'images/RGHOST_0.png', "red")]
+        self.player = Player(self.game, 'images/pacman_0.png')
+        self.ghosts = [Ghost(self.game, 'images/YGHOST_0.png', "yellow", 200), Ghost(self.game, 'images/BGHOST_0.png', "blue", 400),
+                       Ghost(self.game, 'images/PGHOST_0.png', "pink", 800), Ghost(self.game, 'images/RGHOST_0.png', "red", 1600)]
         self.walls = [Wall(self.game, 375, 260, 50, 20), Wall(self.game, 460, 510, 270, 20),
                       Wall(self.game, 460, 490, 270, 20), Wall(self.game, 460, 470, 270, 20),
                       Wall(self.game, 70, 510, 270, 20), Wall(self.game, 70, 490, 270, 20),
@@ -113,7 +113,9 @@ class MainScene(BaseScene):
                       Road(self.crossroads[5], self.crossroads[11]), Road(self.crossroads[31], self.crossroads[35])]
 
         self.seeds = self.generate_seeds()
-        self.objects = self.seeds + self.walls + self.ghosts + [self.player]
+        self.energizers = [Energizer(self.game, 46, 94), Energizer(self.game, 758, 94), Energizer(self.game, self.crossroads[24].x, self.crossroads[24].y), Energizer(self.game, self.crossroads[31].x, self.crossroads[31].y)]
+
+        self.objects = self.seeds + self.energizers + self.walls + self.ghosts + [self.player]
 
     def process_event(self, event: pygame.event.Event) -> None:
         if event.type == pygame.KEYDOWN:
@@ -140,16 +142,16 @@ class MainScene(BaseScene):
             self.player.write.write(str(self.player.score) + '\n')
             self.player.write.close()
             self.game.set_scene(self.game.GAMEOVER_SCENE_INDEX)
-        pass
 
     def ghosts_logic(self):
         if self.time_from_activation() > 3:
             if len(self.walls) == MainScene.INITIAL_WALLS_COUNT:
                 del self.walls[0]
-                self.objects = self.seeds + self.walls + self.ghosts + [self.player]
+                self.objects = self.seeds + self.energizers + self.walls + self.ghosts + [self.player]
 
+            speed = 5 if self.player.is_frightened else 2
             for item in self.ghosts:
-                item.move()
+                item.move(speed)
 
     def check_player_collisions(self):
         for item in self.objects:

@@ -11,9 +11,9 @@ class Seed(DrawableObject):
         super().__init__(game)
         self.x = x
         self.y = y
-        self.rect = pygame.rect.Rect(x - Seed.RADIUS, y - Seed.RADIUS, Seed.DIAMETER, Seed.DIAMETER)
+        self.rect = pygame.rect.Rect(x - self.RADIUS, y - self.RADIUS, self.DIAMETER, self.DIAMETER)
         self.stay = True
 
     def process_draw(self) -> None:
         if self.stay == True:
-            pygame.draw.circle(self.game.screen, Color.YELLOW, (self.x, self.y), Seed.RADIUS)
+            pygame.draw.circle(self.game.screen, Color.YELLOW, (self.x, self.y), self.RADIUS)

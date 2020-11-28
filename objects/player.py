@@ -3,10 +3,13 @@ from objects.ghost import Ghost
 from objects.wall import Wall
 from objects.lives import Lives
 from objects.seed import Seed
+from objects.energizer import Energizer
 from objects.text import TextObject
 
 
-class Player(Ghost):
+class Player:
+    KILL_MODE_DURATION = 8
+
     def respawn(self):
         self.rect.y = 530
         self.rect.x = 375
@@ -22,8 +25,8 @@ class Player(Ghost):
         self.HS_posx += (4 - temp) * 10
         self.Text_HScore.move_center(self.HS_posx, self.HS_posy)
 
-    def __init__(self, game, drawing, color):
-        Ghost.__init__(self, game, drawing, color)
+    def __init__(self, game, drawing):
+        self.game = game
         self.score = 0
         self.img = pg.image.load(drawing)
         self.width = 50
@@ -39,6 +42,8 @@ class Player(Ghost):
         self.prev_pos_x = self.rect.x
         self.prev_pos_y = self.rect.y
         self.lives = Lives(self.game)
+        self.is_frightened = True
+        self.kill_mode_start = 0
         self.Text_Score = TextObject(self.game)
         self.Text_Score.move_center(400, 615)
         self.Text_HScore = TextObject(self.game)
@@ -103,14 +108,29 @@ class Player(Ghost):
                 self.move_stop()
         elif isinstance(obj, Ghost):
             if self.check_collision(obj.rect):
-                self.is_dead = True
-                self.lives.lives -= 1
-        elif isinstance(obj, Seed) and obj.stay == True:
-            if self.check_collision(obj.rect):
+                if self.is_frightened:
+                    self.is_dead = True
+                    self.lives.lives -= 1
+                    self.score += 10
+                else:
+                    self.score += obj.kill_cost
+                    obj.respawn()
+        elif isinstance(obj, Energizer):
+            if obj.stay and self.check_collision(obj.rect):
+                self.is_frightened = False
+                self.kill_mode_start = pg.time.get_ticks()
+                obj.stay = False
+        elif isinstance(obj, Seed):
+            if obj.stay and self.check_collision(obj.rect):
                 self.score += 10
                 print(self.score)
                 obj.stay = False
                 del obj.rect
+
+    def process_logic(self):
+        if not self.is_frightened and (pg.time.get_ticks() - self.kill_mode_start) / 1000 > self.KILL_MODE_DURATION:
+            self.is_frightened = True
+
     def check_tunnel(self):
         if self.rect.x == -50 and self.current_shift_x == -5:
             self.rect.x = 800
@@ -118,6 +138,7 @@ class Player(Ghost):
             self.rect.x = -50
         self.rect.x = self.rect.x + self.current_shift_x
         self.rect.y = self.rect.y + self.current_shift_y
+
     def process_draw(self):
         self.Text_Score.update_text(str(self.score))
         self.Text_Score.process_draw()

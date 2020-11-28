@@ -14,7 +14,7 @@ class Ghost:
         del f
         self.speed_y = 0
 
-    def __init__(self, game, drawing, color):
+    def __init__(self, game, drawing, color, kill_cost):
         self.angle = 0
         self.color = color
         self.game = game
@@ -23,15 +23,16 @@ class Ghost:
         self.height = 50
         self.img = pg.transform.scale(self.img, (self.width, self.height))
         self.rect = self.img.get_rect()
+        self.kill_cost = kill_cost
         self.respawn()
 
     def process_logic(self):
         pass
 
-    def move(self):
+    def move(self, speed):
         self.rect.x += self.speed_x
         self.rect.y += self.speed_y
-        speed = 5
+
         if self.rect.y < 20:
             self.rect.y += 20 - self.rect.y
             self.speed_y = 0

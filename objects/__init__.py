@@ -9,3 +9,4 @@ from .lives import Lives
 from .seed import Seed
 from .crossroad import Crossroad
 from .road import Road
+from .energizer import Energizer
