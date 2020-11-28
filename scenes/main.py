@@ -137,6 +137,8 @@ class MainScene(BaseScene):
 
     def check_game_over(self) -> None:
         if self.player.lives.lives == 0:
+            self.player.write.write(str(self.player.score) + '\n')
+            self.player.write.close()
             self.game.set_scene(self.game.GAMEOVER_SCENE_INDEX)
         pass
 

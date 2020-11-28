@@ -12,6 +12,16 @@ class Player(Ghost):
         self.rect.x = 375
         self.is_dead = False
 
+    def find_highest_score(self):
+        for line in self.read:
+            if self.highest_score < int(line):
+                self.highest_score = int(line)
+        self.read.close()
+        self.Text_HScore.update_text(str(self.highest_score))
+        temp = len(str(self.highest_score))
+        self.HS_posx += (4 - temp) * 10
+        self.Text_HScore.move_center(self.HS_posx, self.HS_posy)
+
     def __init__(self, game, drawing, color):
         Ghost.__init__(self, game, drawing, color)
         self.score = 0
@@ -29,8 +39,17 @@ class Player(Ghost):
         self.prev_pos_x = self.rect.x
         self.prev_pos_y = self.rect.y
         self.lives = Lives(self.game)
-        self.Text = TextObject(self.game)
-        self.Text.move_center(400, 615)
+        self.Text_Score = TextObject(self.game)
+        self.Text_Score.move_center(400, 615)
+        self.Text_HScore = TextObject(self.game)
+        self.HS_posx = 758
+        self.HS_posy = 615
+        self.Text_HScore.move_center(self.HS_posx, self.HS_posy)
+        self.read = open("high_scores/high_scores.txt", "r")
+        self.write = open("high_scores/high_scores.txt", "a")
+        self.highest_score = 0
+        self.find_highest_score()
+
     def move_right(self):
         if self.rect.x < 780 - self.width:
             self.current_shift_x = self.pl_speed
@@ -100,8 +119,9 @@ class Player(Ghost):
         self.rect.x = self.rect.x + self.current_shift_x
         self.rect.y = self.rect.y + self.current_shift_y
     def process_draw(self):
-        self.Text.update_text(str(self.score))
-        self.Text.process_draw()
+        self.Text_Score.update_text(str(self.score))
+        self.Text_Score.process_draw()
+        self.Text_HScore.process_draw()
         self.prev_pos_x = self.rect.x
         self.prev_pos_y = self.rect.y
         self.check_tunnel()
