@@ -2,7 +2,7 @@ import pygame as pg
 from objects.ghost import Ghost
 from objects.wall import Wall
 from objects.lives import Lives
-
+from objects.seed import Seed
 
 class Player(Ghost):
     def respawn(self):
@@ -12,6 +12,7 @@ class Player(Ghost):
 
     def __init__(self, game, drawing, color):
         Ghost.__init__(self, game, drawing, color)
+        self.score = 0
         self.img = pg.image.load(drawing)
         self.width = 50
         self.height = 50
@@ -82,6 +83,12 @@ class Player(Ghost):
             if self.check_collision(obj.rect):
                 self.is_dead = True
                 self.lives.lives -= 1
+        elif isinstance(obj, Seed) and obj.stay == True:
+            if self.check_collision(obj.rect):
+                self.score += 1
+                print(self.score)
+                obj.stay = False
+                del obj.rect
     def check_tunnel(self):
         if self.rect.x == -50 and self.current_shift_x == -5:
             self.rect.x = 800
