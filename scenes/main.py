@@ -1,11 +1,6 @@
-from random import randint
-from typing import Tuple
-
 import pygame
-import random
 
-from constants import Color
-from objects import BallObject, TextObject, Wall, Player, Ghost, Seed, Crossroad, Road, Energizer
+from objects import Wall, Player, Ghost, Seed, Crossroad, Road, Energizer
 from scenes import BaseScene
 
 
@@ -34,8 +29,10 @@ class MainScene(BaseScene):
 
     def create_objects(self) -> None:
         self.player = Player(self.game, 'images/pacman_0.png')
-        self.ghosts = [Ghost(self.game, 'images/YGHOST_0.png', "yellow", 200), Ghost(self.game, 'images/BGHOST_0.png', "blue", 400),
-                       Ghost(self.game, 'images/PGHOST_0.png', "pink", 800), Ghost(self.game, 'images/RGHOST_0.png', "red", 1600)]
+        self.ghosts = [Ghost(self.game, 'images/YGHOST_0.png', "yellow", 200),
+                       Ghost(self.game, 'images/BGHOST_0.png', "blue", 400),
+                       Ghost(self.game, 'images/PGHOST_0.png', "pink", 800),
+                       Ghost(self.game, 'images/RGHOST_0.png', "red", 1600)]
         self.walls = [Wall(self.game, 375, 260, 50, 20), Wall(self.game, 460, 510, 270, 20),
                       Wall(self.game, 460, 490, 270, 20), Wall(self.game, 460, 470, 270, 20),
                       Wall(self.game, 70, 510, 270, 20), Wall(self.game, 70, 490, 270, 20),
@@ -113,7 +110,9 @@ class MainScene(BaseScene):
                       Road(self.crossroads[5], self.crossroads[11]), Road(self.crossroads[31], self.crossroads[35])]
 
         self.seeds = self.generate_seeds()
-        self.energizers = [Energizer(self.game, 46, 94), Energizer(self.game, 758, 94), Energizer(self.game, self.crossroads[24].x, self.crossroads[24].y), Energizer(self.game, self.crossroads[31].x, self.crossroads[31].y)]
+        self.energizers = [Energizer(self.game, 46, 94), Energizer(self.game, 758, 94),
+                           Energizer(self.game, self.crossroads[24].x, self.crossroads[24].y),
+                           Energizer(self.game, self.crossroads[31].x, self.crossroads[31].y)]
 
         self.objects = self.seeds + self.energizers + self.walls + self.ghosts + [self.player]
 
@@ -138,10 +137,15 @@ class MainScene(BaseScene):
         return (pygame.time.get_ticks() - self.start_ticks) / 1000
 
     def check_game_over(self) -> None:
+        active_seeds = sum(int(x.stay) for x in self.seeds)
         if self.player.lives.lives == 0:
             self.player.write.write(str(self.player.score) + '\n')
             self.player.write.close()
             self.game.set_scene(self.game.GAMEOVER_SCENE_INDEX)
+        elif active_seeds == 0:
+            self.player.write.write(str(self.player.score) + '\n')
+            self.player.write.close()
+            self.game.set_scene(self.game.WIN_SCENE_INDEX)
 
     def ghosts_logic(self):
         if self.time_from_activation() > 3:
@@ -149,7 +153,7 @@ class MainScene(BaseScene):
                 del self.walls[0]
                 self.objects = self.seeds + self.energizers + self.walls + self.ghosts + [self.player]
 
-            speed = 5 if self.player.is_frightened else 2
+            speed = 5 if self.player.is_frightened else 1
             for item in self.ghosts:
                 item.move(speed)
 

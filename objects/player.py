@@ -1,10 +1,11 @@
 import pygame as pg
+
+from objects.energizer import Energizer
 from objects.ghost import Ghost
-from objects.wall import Wall
 from objects.lives import Lives
 from objects.seed import Seed
-from objects.energizer import Energizer
 from objects.text import TextObject
+from objects.wall import Wall
 
 
 class Player:
@@ -29,8 +30,8 @@ class Player:
         self.game = game
         self.score = 0
         self.img = pg.image.load(drawing)
-        self.width = 50
-        self.height = 50
+        self.width = 45
+        self.height = 45
         self.img = pg.transform.scale(self.img, (self.width, self.height))
         self.rect = self.img.get_rect()
         self.speed_x = 0

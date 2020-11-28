@@ -1,6 +1,3 @@
-from objects import Crossroad
-
-
 class Road:
     step = 22
 

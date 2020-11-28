@@ -1,6 +1,7 @@
 import pygame
-from objects.base import DrawableObject
+
 from constants import Color
+from objects.base import DrawableObject
 
 
 class Seed(DrawableObject):

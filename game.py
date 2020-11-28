@@ -1,7 +1,7 @@
 import pygame
 
 from constants import Color
-from scenes import MainScene, MenuScene, FinalScene, PauseScene
+from scenes import MainScene, MenuScene, FinalScene, PauseScene, WinScene, ResultsScene
 from scenes.overlay import OverlayScene
 
 
@@ -11,12 +11,15 @@ class Game:
     MAIN_SCENE_INDEX = 1
     GAMEOVER_SCENE_INDEX = 2
     PAUSE_SCENE_INDEX = 3
+    WIN_SCENE_INDEX = 4
+    RESULT_SCENE_INDEX = 5
     current_scene_index = MENU_SCENE_INDEX
     USE_FPS_OVERLAY = False
 
     def __init__(self) -> None:
         self.screen = pygame.display.set_mode(self.SIZE)
-        self.scenes = [MenuScene(self), MainScene(self), FinalScene(self), PauseScene(self)]
+        self.scenes = [MenuScene(self), MainScene(self), FinalScene(self), PauseScene(self), WinScene(self),
+                       ResultsScene(self)]
         if self.USE_FPS_OVERLAY:
             self.overlay = OverlayScene(self)
         self.game_over = False

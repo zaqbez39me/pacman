@@ -2,7 +2,7 @@ import pygame as pg
 
 
 class Lives:
-    MAX_LIVES = 2
+    MAX_LIVES = 3
 
     def __init__(self, game):
         self.game = game

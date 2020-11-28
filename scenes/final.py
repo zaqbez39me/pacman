@@ -6,7 +6,7 @@ from scenes import BaseScene
 
 
 class FinalScene(BaseScene):
-    TEXT_FMT = 'Game over ({})'
+    TEXT_FMT = 'Вы проиграли ({})'
     seconds_to_end = 3
 
     def __init__(self, game) -> None:
