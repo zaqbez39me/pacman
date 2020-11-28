@@ -3,6 +3,8 @@ from objects.ghost import Ghost
 from objects.wall import Wall
 from objects.lives import Lives
 from objects.seed import Seed
+from objects.text import TextObject
+
 
 class Player(Ghost):
     def respawn(self):
@@ -27,7 +29,8 @@ class Player(Ghost):
         self.prev_pos_x = self.rect.x
         self.prev_pos_y = self.rect.y
         self.lives = Lives(self.game)
-
+        self.Text = TextObject(self.game)
+        self.Text.move_center(400, 615)
     def move_right(self):
         if self.rect.x < 780 - self.width:
             self.current_shift_x = self.pl_speed
@@ -85,7 +88,7 @@ class Player(Ghost):
                 self.lives.lives -= 1
         elif isinstance(obj, Seed) and obj.stay == True:
             if self.check_collision(obj.rect):
-                self.score += 1
+                self.score += 10
                 print(self.score)
                 obj.stay = False
                 del obj.rect
@@ -97,6 +100,8 @@ class Player(Ghost):
         self.rect.x = self.rect.x + self.current_shift_x
         self.rect.y = self.rect.y + self.current_shift_y
     def process_draw(self):
+        self.Text.update_text(str(self.score))
+        self.Text.process_draw()
         self.prev_pos_x = self.rect.x
         self.prev_pos_y = self.rect.y
         self.check_tunnel()
