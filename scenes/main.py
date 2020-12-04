@@ -28,54 +28,6 @@ class MainScene(BaseScene):
         return seeds
 
     def create_objects(self) -> None:
-        self.player = Player(self.game, 'images/pacman_0.png')
-        self.ghosts = [Ghost(self.game, 'images/YGHOST_0.png', "yellow", 200),
-                       Ghost(self.game, 'images/BGHOST_0.png', "blue", 400),
-                       Ghost(self.game, 'images/PGHOST_0.png', "pink", 800),
-                       Ghost(self.game, 'images/RGHOST_0.png', "red", 1600)]
-        self.walls = [Wall(self.game, 375, 260, 50, 20), Wall(self.game, 460, 510, 270, 20),
-                      Wall(self.game, 460, 490, 270, 20), Wall(self.game, 460, 470, 270, 20),
-                      Wall(self.game, 70, 510, 270, 20), Wall(self.game, 70, 490, 270, 20),
-                      Wall(self.game, 70, 470, 270, 20), Wall(self.game, 570, 400, 20, 70),
-                      Wall(self.game, 550, 400, 20, 70), Wall(self.game, 530, 400, 20, 70),
-                      Wall(self.game, 250, 400, 20, 70), Wall(self.game, 230, 400, 20, 70),
-                      Wall(self.game, 210, 400, 20, 70), Wall(self.game, 730, 400, 50, 20),
-                      Wall(self.game, 210, 70, 130, 25), Wall(self.game, 460, 70, 130, 25),
-                      Wall(self.game, 210, 95, 130, 25), Wall(self.game, 460, 95, 130, 25),
-                      Wall(self.game, 70, 70, 90, 25), Wall(self.game, 640, 70, 90, 25),
-                      Wall(self.game, 70, 95, 90, 25), Wall(self.game, 640, 95, 90, 25),
-                      Wall(self.game, 340, 260, 35, 20), Wall(self.game, 425, 260, 35, 20),
-                      Wall(self.game, 320, 260, 20, 70), Wall(self.game, 460, 260, 20, 70),
-                      Wall(self.game, 530, 170, 20, 180), Wall(self.game, 550, 170, 20, 180),
-                      Wall(self.game, 570, 170, 20, 180), Wall(self.game, 210, 170, 20, 180),
-                      Wall(self.game, 230, 170, 20, 180), Wall(self.game, 250, 170, 20, 180),
-                      Wall(self.game, 390, 170, 20, 40), Wall(self.game, 640, 345, 20, 55),
-                      Wall(self.game, 660, 345, 20, 55), Wall(self.game, 680, 345, 20, 55),
-                      Wall(self.game, 700, 345, 20, 55), Wall(self.game, 720, 345, 20, 55),
-                      Wall(self.game, 740, 345, 20, 55), Wall(self.game, 760, 345, 20, 55),
-                      Wall(self.game, 20, 345, 20, 55), Wall(self.game, 40, 345, 20, 55),
-                      Wall(self.game, 60, 345, 20, 55), Wall(self.game, 80, 345, 20, 55),
-                      Wall(self.game, 100, 345, 20, 55), Wall(self.game, 120, 345, 20, 55),
-                      Wall(self.game, 140, 345, 20, 55), Wall(self.game, 780, 325, 20, 275),
-                      Wall(self.game, 780, 0, 20, 275), Wall(self.game, 0, 580, 800, 20),
-                      Wall(self.game, 0, 325, 20, 275), Wall(self.game, 0, 0, 20, 275),
-                      Wall(self.game, 0, 0, 800, 20),
-                      Wall(self.game, 390, 420, 20, 110), Wall(self.game, 390, 20, 20, 100),
-                      Wall(self.game, 20, 170, 140, 20), Wall(self.game, 20, 255, 140, 20),
-                      Wall(self.game, 20, 325, 140, 20), Wall(self.game, 320, 330, 160, 20),
-                      Wall(self.game, 320, 400, 160, 20), Wall(self.game, 20, 400, 140, 20),
-                      Wall(self.game, 640, 400, 140, 20), Wall(self.game, 640, 325, 140, 20),
-                      Wall(self.game, 640, 255, 140, 20), Wall(self.game, 640, 170, 140, 20),
-                      Wall(self.game, 20, 190, 20, 65), Wall(self.game, 40, 190, 20, 65),
-                      Wall(self.game, 60, 190, 20, 65), Wall(self.game, 80, 190, 20, 65),
-                      Wall(self.game, 100, 190, 20, 65), Wall(self.game, 120, 190, 20, 65),
-                      Wall(self.game, 140, 190, 20, 65), Wall(self.game, 640, 190, 20, 65),
-                      Wall(self.game, 660, 190, 20, 65), Wall(self.game, 680, 190, 20, 65),
-                      Wall(self.game, 700, 190, 20, 65), Wall(self.game, 720, 190, 20, 65),
-                      Wall(self.game, 740, 190, 20, 65), Wall(self.game, 760, 190, 20, 65),
-                      Wall(self.game, 270, 170, 70, 20), Wall(self.game, 270, 190, 70, 20),
-                      Wall(self.game, 460, 170, 70, 20), Wall(self.game, 460, 190, 70, 20)]
-
         self.crossroads = [Crossroad(46, 48), Crossroad(184, 48), Crossroad(365, 48), Crossroad(435, 48),
                            Crossroad(615, 48), Crossroad(758, 48), Crossroad(46, 150), Crossroad(184, 150),
                            Crossroad(365, 150), Crossroad(435, 150), Crossroad(615, 150), Crossroad(758, 150),
@@ -126,7 +78,6 @@ class MainScene(BaseScene):
         self.crossroads[36].neighbours = [self.crossroads[14], None, self.crossroads[13], self.crossroads[37]]
         self.crossroads[37].neighbours = [None, self.crossroads[36], None, None]
 
-
         self.seeds_roads = [Road(self.crossroads[0], self.crossroads[1]), Road(self.crossroads[1], self.crossroads[2]),
                             Road(self.crossroads[3], self.crossroads[4]), Road(self.crossroads[4], self.crossroads[5]),
                             Road(self.crossroads[6], self.crossroads[7]), Road(self.crossroads[7], self.crossroads[8]),
@@ -150,6 +101,54 @@ class MainScene(BaseScene):
                             Road(self.crossroads[18], self.crossroads[23]), Road(self.crossroads[18], self.crossroads[10]),
                             Road(self.crossroads[10], self.crossroads[4]), Road(self.crossroads[15], self.crossroads[22]),
                             Road(self.crossroads[5], self.crossroads[11]), Road(self.crossroads[31], self.crossroads[35])]
+
+        self.player = Player(self.game, 'images/pacman_0.png')
+        self.ghosts = [Ghost(self.game, 'Y', 200, self.crossroads[37], 1),
+                       Ghost(self.game, 'B', 400, self.crossroads[37], 1),
+                       Ghost(self.game, 'P', 800, self.crossroads[37], 1),
+                       Ghost(self.game, 'R', 1600, self.crossroads[37], 1)]
+        self.walls = [Wall(self.game, 375, 260, 50, 20), Wall(self.game, 460, 510, 270, 20),
+                      Wall(self.game, 460, 490, 270, 20), Wall(self.game, 460, 470, 270, 20),
+                      Wall(self.game, 70, 510, 270, 20), Wall(self.game, 70, 490, 270, 20),
+                      Wall(self.game, 70, 470, 270, 20), Wall(self.game, 570, 400, 20, 70),
+                      Wall(self.game, 550, 400, 20, 70), Wall(self.game, 530, 400, 20, 70),
+                      Wall(self.game, 250, 400, 20, 70), Wall(self.game, 230, 400, 20, 70),
+                      Wall(self.game, 210, 400, 20, 70), Wall(self.game, 730, 400, 50, 20),
+                      Wall(self.game, 210, 70, 130, 25), Wall(self.game, 460, 70, 130, 25),
+                      Wall(self.game, 210, 95, 130, 25), Wall(self.game, 460, 95, 130, 25),
+                      Wall(self.game, 70, 70, 90, 25), Wall(self.game, 640, 70, 90, 25),
+                      Wall(self.game, 70, 95, 90, 25), Wall(self.game, 640, 95, 90, 25),
+                      Wall(self.game, 340, 260, 35, 20), Wall(self.game, 425, 260, 35, 20),
+                      Wall(self.game, 320, 260, 20, 70), Wall(self.game, 460, 260, 20, 70),
+                      Wall(self.game, 530, 170, 20, 180), Wall(self.game, 550, 170, 20, 180),
+                      Wall(self.game, 570, 170, 20, 180), Wall(self.game, 210, 170, 20, 180),
+                      Wall(self.game, 230, 170, 20, 180), Wall(self.game, 250, 170, 20, 180),
+                      Wall(self.game, 390, 170, 20, 40), Wall(self.game, 640, 345, 20, 55),
+                      Wall(self.game, 660, 345, 20, 55), Wall(self.game, 680, 345, 20, 55),
+                      Wall(self.game, 700, 345, 20, 55), Wall(self.game, 720, 345, 20, 55),
+                      Wall(self.game, 740, 345, 20, 55), Wall(self.game, 760, 345, 20, 55),
+                      Wall(self.game, 20, 345, 20, 55), Wall(self.game, 40, 345, 20, 55),
+                      Wall(self.game, 60, 345, 20, 55), Wall(self.game, 80, 345, 20, 55),
+                      Wall(self.game, 100, 345, 20, 55), Wall(self.game, 120, 345, 20, 55),
+                      Wall(self.game, 140, 345, 20, 55), Wall(self.game, 780, 325, 20, 275),
+                      Wall(self.game, 780, 0, 20, 275), Wall(self.game, 0, 580, 800, 20),
+                      Wall(self.game, 0, 325, 20, 275), Wall(self.game, 0, 0, 20, 275),
+                      Wall(self.game, 0, 0, 800, 20),
+                      Wall(self.game, 390, 420, 20, 110), Wall(self.game, 390, 20, 20, 100),
+                      Wall(self.game, 20, 170, 140, 20), Wall(self.game, 20, 255, 140, 20),
+                      Wall(self.game, 20, 325, 140, 20), Wall(self.game, 320, 330, 160, 20),
+                      Wall(self.game, 320, 400, 160, 20), Wall(self.game, 20, 400, 140, 20),
+                      Wall(self.game, 640, 400, 140, 20), Wall(self.game, 640, 325, 140, 20),
+                      Wall(self.game, 640, 255, 140, 20), Wall(self.game, 640, 170, 140, 20),
+                      Wall(self.game, 20, 190, 20, 65), Wall(self.game, 40, 190, 20, 65),
+                      Wall(self.game, 60, 190, 20, 65), Wall(self.game, 80, 190, 20, 65),
+                      Wall(self.game, 100, 190, 20, 65), Wall(self.game, 120, 190, 20, 65),
+                      Wall(self.game, 140, 190, 20, 65), Wall(self.game, 640, 190, 20, 65),
+                      Wall(self.game, 660, 190, 20, 65), Wall(self.game, 680, 190, 20, 65),
+                      Wall(self.game, 700, 190, 20, 65), Wall(self.game, 720, 190, 20, 65),
+                      Wall(self.game, 740, 190, 20, 65), Wall(self.game, 760, 190, 20, 65),
+                      Wall(self.game, 270, 170, 70, 20), Wall(self.game, 270, 190, 70, 20),
+                      Wall(self.game, 460, 170, 70, 20), Wall(self.game, 460, 190, 70, 20)]
 
         self.seeds = self.generate_seeds()
         self.energizers = [Energizer(self.game, 46, 94), Energizer(self.game, 758, 94),
@@ -195,9 +194,8 @@ class MainScene(BaseScene):
                 del self.walls[0]
                 self.objects = self.seeds + self.energizers + self.walls + self.ghosts + [self.player]
 
-            speed = 5 if self.player.is_frightened else 1
             for item in self.ghosts:
-                item.move(speed)
+                item.move(self.player.is_frightened)
 
     def check_player_collisions(self):
         for item in self.objects:
