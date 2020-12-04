@@ -8,6 +8,9 @@ class Ghost:
     def respawn(self):
         self.crossroad = self.start_crossroad
         self.direction = self.start_direction
+        self.x, self.y = self.crossroad.x, self.crossroad.y
+        self.img = self.reload_image()
+        self.rect.x, self.rect.y = self.get_img_rect_coords()
 
     def reload_image(self):
         filename = f'images/{self.color}GHOST_{self.direction * 90}.png'
