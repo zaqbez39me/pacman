@@ -160,13 +160,45 @@ class MainScene(BaseScene):
     def process_event(self, event: pygame.event.Event) -> None:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_d:
-                self.player.move_right()
+                self.player.rect.x += 5
+                Dol = True
+                for walls in self.walls:
+                    if self.player.check_collision(walls.rect):
+                        Dol = False
+                        break
+                if Dol:
+                    self.player.move_right()
+                self.player.rect.x -= 5
             elif event.key == pygame.K_a:
-                self.player.move_left()
+                self.player.rect.x -= 5
+                Aol = True
+                for walls in self.walls:
+                    if self.player.check_collision(walls.rect):
+                        Aol = False
+                        break
+                if Aol:
+                    self.player.move_left()
+                self.player.rect.x += 5
             elif event.key == pygame.K_s:
-                self.player.move_down()
+                self.player.rect.y += 5
+                Sol = True
+                for walls in self.walls:
+                    if self.player.check_collision(walls.rect):
+                        Sol = False
+                        break
+                if Sol:
+                    self.player.move_down()
+                self.player.rect.y -= 5
             elif event.key == pygame.K_w:
-                self.player.move_up()
+                self.player.rect.y -= 5
+                Wol = True
+                for walls in self.walls:
+                    if self.player.check_collision(walls.rect):
+                        Wol = False
+                        break
+                if Wol:
+                    self.player.move_up()
+                self.player.rect.y += 5
             elif event.key == pygame.K_p:
                 self.game.set_scene(self.game.PAUSE_SCENE_INDEX)
 
@@ -174,8 +206,8 @@ class MainScene(BaseScene):
         self.create_objects()
         self.start_ticks = pygame.time.get_ticks()
 
-    def time_from_activation(self):
-        return (pygame.time.get_ticks() - self.start_ticks) / 1000
+    def time_from_activation(self, start_ticks):
+        return (pygame.time.get_ticks() - start_ticks) / 1000
 
     def check_game_over(self) -> None:
         active_seeds = sum(int(x.stay) for x in self.seeds)
@@ -189,7 +221,7 @@ class MainScene(BaseScene):
             self.game.set_scene(self.game.WIN_SCENE_INDEX)
 
     def ghosts_logic(self):
-        if self.time_from_activation() > 3:
+        if self.time_from_activation(self.start_ticks) > 3:
             if len(self.walls) == MainScene.INITIAL_WALLS_COUNT:
                 del self.walls[0]
                 self.objects = self.seeds + self.energizers + self.walls + self.ghosts + [self.player]
