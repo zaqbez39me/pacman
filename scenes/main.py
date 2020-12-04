@@ -14,7 +14,7 @@ class MainScene(BaseScene):
 
     def generate_seeds(self):
         seeds = []
-        for road in self.roads:
+        for road in self.seeds_roads:
             seeds.append(Seed(self.game, road.lx, road.ly))
             seeds.append(Seed(self.game, road.rx, road.ry))
 
@@ -84,30 +84,72 @@ class MainScene(BaseScene):
                            Crossroad(184, 376), Crossroad(296, 376), Crossroad(508, 376), Crossroad(615, 376),
                            Crossroad(46, 446), Crossroad(184, 446), Crossroad(296, 446), Crossroad(365, 446),
                            Crossroad(435, 446), Crossroad(508, 446), Crossroad(615, 446), Crossroad(758, 446),
-                           Crossroad(46, 556), Crossroad(365, 556), Crossroad(435, 556), Crossroad(758, 556)]
-        self.roads = [Road(self.crossroads[0], self.crossroads[1]), Road(self.crossroads[1], self.crossroads[2]),
-                      Road(self.crossroads[3], self.crossroads[4]), Road(self.crossroads[4], self.crossroads[5]),
-                      Road(self.crossroads[6], self.crossroads[7]), Road(self.crossroads[7], self.crossroads[8]),
-                      Road(self.crossroads[9], self.crossroads[10]), Road(self.crossroads[10], self.crossroads[11]),
-                      Road(self.crossroads[12], self.crossroads[13]), Road(self.crossroads[13], self.crossroads[14]),
-                      Road(self.crossroads[14], self.crossroads[15]), Road(self.crossroads[16], self.crossroads[17]),
-                      Road(self.crossroads[18], self.crossroads[19]), Road(self.crossroads[20], self.crossroads[21]),
-                      Road(self.crossroads[21], self.crossroads[22]), Road(self.crossroads[22], self.crossroads[23]),
-                      Road(self.crossroads[24], self.crossroads[25]), Road(self.crossroads[26], self.crossroads[27]),
-                      Road(self.crossroads[28], self.crossroads[29]), Road(self.crossroads[30], self.crossroads[31]),
-                      Road(self.crossroads[32], self.crossroads[33]), Road(self.crossroads[34], self.crossroads[35]),
-                      Road(self.crossroads[0], self.crossroads[6]), Road(self.crossroads[24], self.crossroads[32]),
-                      Road(self.crossroads[1], self.crossroads[7]), Road(self.crossroads[7], self.crossroads[17]),
-                      Road(self.crossroads[17], self.crossroads[20]), Road(self.crossroads[20], self.crossroads[25]),
-                      Road(self.crossroads[12], self.crossroads[21]), Road(self.crossroads[21], self.crossroads[26]),
-                      Road(self.crossroads[2], self.crossroads[8]), Road(self.crossroads[8], self.crossroads[13]),
-                      Road(self.crossroads[27], self.crossroads[33]), Road(self.crossroads[3], self.crossroads[9]),
-                      Road(self.crossroads[9], self.crossroads[14]), Road(self.crossroads[28], self.crossroads[34]),
-                      Road(self.crossroads[8], self.crossroads[9]), Road(self.crossroads[33], self.crossroads[34]),
-                      Road(self.crossroads[22], self.crossroads[29]), Road(self.crossroads[23], self.crossroads[30]),
-                      Road(self.crossroads[18], self.crossroads[23]), Road(self.crossroads[18], self.crossroads[10]),
-                      Road(self.crossroads[10], self.crossroads[4]), Road(self.crossroads[15], self.crossroads[22]),
-                      Road(self.crossroads[5], self.crossroads[11]), Road(self.crossroads[31], self.crossroads[35])]
+                           Crossroad(46, 556), Crossroad(365, 556), Crossroad(435, 556), Crossroad(758, 556),
+                           Crossroad(400, 238), Crossroad(400, 300)]
+
+        self.crossroads[0].neighbours = [self.crossroads[1], None, None, self.crossroads[6]]
+        self.crossroads[1].neighbours = [self.crossroads[2], None, self.crossroads[0], self.crossroads[7]]
+        self.crossroads[2].neighbours = [None, None, self.crossroads[1], self.crossroads[8]]
+        self.crossroads[3].neighbours = [self.crossroads[4], None, None, self.crossroads[9]]
+        self.crossroads[4].neighbours = [self.crossroads[5], None, self.crossroads[3], self.crossroads[10]]
+        self.crossroads[5].neighbours = [None, None, self.crossroads[4], self.crossroads[11]]
+        self.crossroads[6].neighbours = [self.crossroads[7], self.crossroads[0], None, None]
+        self.crossroads[7].neighbours = [self.crossroads[8], self.crossroads[1], self.crossroads[6], self.crossroads[17]]
+        self.crossroads[8].neighbours = [self.crossroads[9], self.crossroads[2], self.crossroads[7], self.crossroads[13]]
+        self.crossroads[9].neighbours = [self.crossroads[10], self.crossroads[3], self.crossroads[8], self.crossroads[14]]
+        self.crossroads[10].neighbours = [self.crossroads[11], self.crossroads[4], self.crossroads[9], self.crossroads[18]]
+        self.crossroads[11].neighbours = [None, self.crossroads[5], self.crossroads[10], None]
+        self.crossroads[12].neighbours = [self.crossroads[13], None, None, self.crossroads[21]]
+        self.crossroads[13].neighbours = [self.crossroads[36], self.crossroads[8], self.crossroads[12], None]
+        self.crossroads[14].neighbours = [self.crossroads[15], self.crossroads[9], self.crossroads[36], None]
+        self.crossroads[15].neighbours = [None, None, self.crossroads[14], self.crossroads[22]]
+        self.crossroads[16].neighbours = [self.crossroads[17], None, None, None]
+        self.crossroads[17].neighbours = [None, self.crossroads[7], self.crossroads[16], self.crossroads[20]]
+        self.crossroads[18].neighbours = [self.crossroads[19], self.crossroads[10], None, self.crossroads[23]]
+        self.crossroads[19].neighbours = [None, None, self.crossroads[18], None]
+        self.crossroads[20].neighbours = [self.crossroads[21], self.crossroads[17], None, self.crossroads[25]]
+        self.crossroads[21].neighbours = [self.crossroads[22], self.crossroads[12], self.crossroads[20], self.crossroads[26]]
+        self.crossroads[22].neighbours = [self.crossroads[23], self.crossroads[15], self.crossroads[21], self.crossroads[29]]
+        self.crossroads[23].neighbours = [None, self.crossroads[18], self.crossroads[22], self.crossroads[30]]
+        self.crossroads[24].neighbours = [self.crossroads[25], None, None, self.crossroads[32]]
+        self.crossroads[25].neighbours = [None, self.crossroads[20], self.crossroads[24], None]
+        self.crossroads[26].neighbours = [self.crossroads[27], self.crossroads[21], None, None]
+        self.crossroads[27].neighbours = [None, None, self.crossroads[26], self.crossroads[33]]
+        self.crossroads[28].neighbours = [self.crossroads[29], None, None, self.crossroads[34]]
+        self.crossroads[29].neighbours = [None, self.crossroads[22], self.crossroads[28], None]
+        self.crossroads[30].neighbours = [self.crossroads[31], self.crossroads[23], None, None]
+        self.crossroads[31].neighbours = [None, None, self.crossroads[30], self.crossroads[35]]
+        self.crossroads[32].neighbours = [self.crossroads[33], self.crossroads[24], None, None]
+        self.crossroads[33].neighbours = [self.crossroads[34], self.crossroads[27], self.crossroads[32], None]
+        self.crossroads[34].neighbours = [self.crossroads[35], self.crossroads[28], self.crossroads[33], None]
+        self.crossroads[35].neighbours = [None, self.crossroads[31], self.crossroads[34], None]
+        self.crossroads[36].neighbours = [self.crossroads[14], None, self.crossroads[13], self.crossroads[37]]
+        self.crossroads[37].neighbours = [None, self.crossroads[36], None, None]
+
+
+        self.seeds_roads = [Road(self.crossroads[0], self.crossroads[1]), Road(self.crossroads[1], self.crossroads[2]),
+                            Road(self.crossroads[3], self.crossroads[4]), Road(self.crossroads[4], self.crossroads[5]),
+                            Road(self.crossroads[6], self.crossroads[7]), Road(self.crossroads[7], self.crossroads[8]),
+                            Road(self.crossroads[9], self.crossroads[10]), Road(self.crossroads[10], self.crossroads[11]),
+                            Road(self.crossroads[12], self.crossroads[13]), Road(self.crossroads[13], self.crossroads[14]),
+                            Road(self.crossroads[14], self.crossroads[15]), Road(self.crossroads[16], self.crossroads[17]),
+                            Road(self.crossroads[18], self.crossroads[19]), Road(self.crossroads[20], self.crossroads[21]),
+                            Road(self.crossroads[21], self.crossroads[22]), Road(self.crossroads[22], self.crossroads[23]),
+                            Road(self.crossroads[24], self.crossroads[25]), Road(self.crossroads[26], self.crossroads[27]),
+                            Road(self.crossroads[28], self.crossroads[29]), Road(self.crossroads[30], self.crossroads[31]),
+                            Road(self.crossroads[32], self.crossroads[33]), Road(self.crossroads[34], self.crossroads[35]),
+                            Road(self.crossroads[0], self.crossroads[6]), Road(self.crossroads[24], self.crossroads[32]),
+                            Road(self.crossroads[1], self.crossroads[7]), Road(self.crossroads[7], self.crossroads[17]),
+                            Road(self.crossroads[17], self.crossroads[20]), Road(self.crossroads[20], self.crossroads[25]),
+                            Road(self.crossroads[12], self.crossroads[21]), Road(self.crossroads[21], self.crossroads[26]),
+                            Road(self.crossroads[2], self.crossroads[8]), Road(self.crossroads[8], self.crossroads[13]),
+                            Road(self.crossroads[27], self.crossroads[33]), Road(self.crossroads[3], self.crossroads[9]),
+                            Road(self.crossroads[9], self.crossroads[14]), Road(self.crossroads[28], self.crossroads[34]),
+                            Road(self.crossroads[8], self.crossroads[9]), Road(self.crossroads[33], self.crossroads[34]),
+                            Road(self.crossroads[22], self.crossroads[29]), Road(self.crossroads[23], self.crossroads[30]),
+                            Road(self.crossroads[18], self.crossroads[23]), Road(self.crossroads[18], self.crossroads[10]),
+                            Road(self.crossroads[10], self.crossroads[4]), Road(self.crossroads[15], self.crossroads[22]),
+                            Road(self.crossroads[5], self.crossroads[11]), Road(self.crossroads[31], self.crossroads[35])]
 
         self.seeds = self.generate_seeds()
         self.energizers = [Energizer(self.game, 46, 94), Energizer(self.game, 758, 94),
