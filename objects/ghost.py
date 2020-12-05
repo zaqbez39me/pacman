@@ -39,10 +39,11 @@ class Ghost:
 
     def process_logic(self):
         if self.is_dead and (pg.time.get_ticks() - self.death_time) // 1000 > self.death_duration:
-            self.respawn()
             self.is_dead = False
 
     def move(self, player_is_frightened):
+        if self.is_dead:
+            return
         speed_factor = 5 if player_is_frightened else 2
         self.x += self.speed[self.direction].x * speed_factor
         self.y += self.speed[self.direction].y * speed_factor
@@ -65,5 +66,6 @@ class Ghost:
             self.game.screen.blit(self.img, self.rect)
 
     def die(self):
-        self.is_dead = True
+        self.is_dead = Truea
         self.death_time = pg.time.get_ticks()
+        self.respawn()
