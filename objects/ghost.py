@@ -2,8 +2,10 @@ import random
 
 import pygame as pg
 
+
 class Ghost:
     speed = [pg.math.Vector2(1, 0), pg.math.Vector2(0, -1), pg.math.Vector2(-1, 0), pg.math.Vector2(0, 1)]
+    death_duration = 3
 
     def respawn(self):
         self.crossroad = self.start_crossroad
@@ -32,9 +34,13 @@ class Ghost:
         self.rect = self.img.get_rect()
         self.rect.x, self.rect.y = self.get_img_rect_coords()
         self.kill_cost = kill_cost
+        self.death_time = 0
+        self.is_dead = False
 
     def process_logic(self):
-        pass
+        if self.is_dead and (pg.time.get_ticks() - self.death_time) // 1000 > self.death_duration:
+            self.respawn()
+            self.is_dead = False
 
     def move(self, player_is_frightened):
         speed_factor = 5 if player_is_frightened else 2
@@ -55,4 +61,9 @@ class Ghost:
         self.rect.x, self.rect.y = self.get_img_rect_coords()
 
     def process_draw(self):
-        self.game.screen.blit(self.img, self.rect)
+        if not self.is_dead:
+            self.game.screen.blit(self.img, self.rect)
+
+    def die(self):
+        self.is_dead = True
+        self.death_time = pg.time.get_ticks()
