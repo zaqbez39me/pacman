@@ -66,6 +66,6 @@ class Ghost:
             self.game.screen.blit(self.img, self.rect)
 
     def die(self):
-        self.is_dead = Truea
+        self.is_dead = True
         self.death_time = pg.time.get_ticks()
         self.respawn()
