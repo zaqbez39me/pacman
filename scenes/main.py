@@ -105,10 +105,12 @@ class MainScene(BaseScene):
 
 
         self.player = Player(self.game, 'images/pacman_0.png')
+
         self.ghosts = [Ghost(self.game, 'Y', 200, self.crossroads[37], 1),
                        Ghost(self.game, 'B', 400, self.crossroads[37], 1),
                        Ghost(self.game, 'P', 800, self.crossroads[37], 1),
                        Ghost(self.game, 'R', 1600, self.crossroads[37], 1)]
+
         self.walls = [Wall(self.game, 375, 260, 50, 20), Wall(self.game, 460, 510, 270, 20),
                       Wall(self.game, 460, 490, 270, 20), Wall(self.game, 460, 470, 270, 20),
                       Wall(self.game, 70, 510, 270, 20), Wall(self.game, 70, 490, 270, 20),
@@ -153,7 +155,7 @@ class MainScene(BaseScene):
                       Wall(self.game, 460, 170, 70, 20), Wall(self.game, 460, 190, 70, 20)]
 
         self.seeds = self.generate_seeds()
-        self.energizers = [Energizer(self.game, 46, 94), Energizer(self.game, 755, 94),
+        self.energizers = [Energizer(self.game, 45, 90), Energizer(self.game, 755, 90),
                            Energizer(self.game, self.crossroads[24].x, self.crossroads[24].y),
                            Energizer(self.game, self.crossroads[31].x, self.crossroads[31].y)]
 
