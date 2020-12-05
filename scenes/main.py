@@ -155,6 +155,7 @@ class MainScene(BaseScene):
                       Wall(self.game, 460, 170, 70, 20), Wall(self.game, 460, 190, 70, 20)]
 
         self.seeds = self.generate_seeds()
+
         self.energizers = [Energizer(self.game, 45, 90), Energizer(self.game, 755, 90),
                            Energizer(self.game, self.crossroads[24].x, self.crossroads[24].y),
                            Energizer(self.game, self.crossroads[31].x, self.crossroads[31].y)]
