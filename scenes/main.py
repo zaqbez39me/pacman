@@ -28,16 +28,16 @@ class MainScene(BaseScene):
         return seeds
 
     def create_objects(self) -> None:
-        self.crossroads = [Crossroad(46, 48), Crossroad(184, 48), Crossroad(365, 48), Crossroad(435, 48),
-                           Crossroad(615, 48), Crossroad(758, 48), Crossroad(46, 150), Crossroad(184, 150),
-                           Crossroad(365, 150), Crossroad(435, 150), Crossroad(615, 150), Crossroad(758, 150),
-                           Crossroad(296, 238), Crossroad(365, 238), Crossroad(435, 238), Crossroad(508, 238),
-                           Crossroad(18, 300), Crossroad(184, 300), Crossroad(615, 300), Crossroad(775, 300),
-                           Crossroad(184, 376), Crossroad(296, 376), Crossroad(508, 376), Crossroad(615, 376),
-                           Crossroad(46, 446), Crossroad(184, 446), Crossroad(296, 446), Crossroad(365, 446),
-                           Crossroad(435, 446), Crossroad(508, 446), Crossroad(615, 446), Crossroad(758, 446),
-                           Crossroad(46, 556), Crossroad(365, 556), Crossroad(435, 556), Crossroad(758, 556),
-                           Crossroad(400, 238), Crossroad(400, 300)]
+        self.crossroads = [Crossroad(45, 45), Crossroad(185, 45), Crossroad(365, 45), Crossroad(435, 45),
+                           Crossroad(615, 45), Crossroad(755, 45), Crossroad(45, 145), Crossroad(185, 145),
+                           Crossroad(365, 145), Crossroad(435, 145), Crossroad(615, 145), Crossroad(755, 145),
+                           Crossroad(295, 235), Crossroad(365, 235), Crossroad(435, 235), Crossroad(505, 235),
+                           Crossroad(18, 300), Crossroad(185, 300), Crossroad(615, 300), Crossroad(775, 300),
+                           Crossroad(185, 375), Crossroad(295, 375), Crossroad(505, 375), Crossroad(615, 375),
+                           Crossroad(45, 445), Crossroad(185, 445), Crossroad(295, 445), Crossroad(365, 445),
+                           Crossroad(435, 445), Crossroad(505, 445), Crossroad(615, 445), Crossroad(755, 445),
+                           Crossroad(45, 555), Crossroad(365, 555), Crossroad(435, 555), Crossroad(755, 555),
+                           Crossroad(400, 235), Crossroad(400, 300), Crossroad(400, 555)]
 
         self.crossroads[0].neighbours = [self.crossroads[1], None, None, self.crossroads[6]]
         self.crossroads[1].neighbours = [self.crossroads[2], None, self.crossroads[0], self.crossroads[7]]
@@ -77,6 +77,7 @@ class MainScene(BaseScene):
         self.crossroads[35].neighbours = [None, self.crossroads[31], self.crossroads[34], None]
         self.crossroads[36].neighbours = [self.crossroads[14], None, self.crossroads[13], self.crossroads[37]]
         self.crossroads[37].neighbours = [None, self.crossroads[36], None, None]
+        self.crossroads[38].neighbours = [self.crossroads[34], None, self.crossroads[33], None]
 
         self.seeds_roads = [Road(self.crossroads[0], self.crossroads[1]), Road(self.crossroads[1], self.crossroads[2]),
                             Road(self.crossroads[3], self.crossroads[4]), Road(self.crossroads[4], self.crossroads[5]),
@@ -101,6 +102,7 @@ class MainScene(BaseScene):
                             Road(self.crossroads[18], self.crossroads[23]), Road(self.crossroads[18], self.crossroads[10]),
                             Road(self.crossroads[10], self.crossroads[4]), Road(self.crossroads[15], self.crossroads[22]),
                             Road(self.crossroads[5], self.crossroads[11]), Road(self.crossroads[31], self.crossroads[35])]
+
 
         self.player = Player(self.game, 'images/pacman_0.png')
         self.ghosts = [Ghost(self.game, 'Y', 200, self.crossroads[37], 1),
@@ -151,7 +153,7 @@ class MainScene(BaseScene):
                       Wall(self.game, 460, 170, 70, 20), Wall(self.game, 460, 190, 70, 20)]
 
         self.seeds = self.generate_seeds()
-        self.energizers = [Energizer(self.game, 46, 94), Energizer(self.game, 758, 94),
+        self.energizers = [Energizer(self.game, 46, 94), Energizer(self.game, 755, 94),
                            Energizer(self.game, self.crossroads[24].x, self.crossroads[24].y),
                            Energizer(self.game, self.crossroads[31].x, self.crossroads[31].y)]
 
@@ -160,13 +162,13 @@ class MainScene(BaseScene):
     def process_event(self, event: pygame.event.Event) -> None:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_d:
-                self.player.move_right()
+                self.player.key_pressed = "RIGHT"
             elif event.key == pygame.K_a:
-                self.player.move_left()
+                self.player.key_pressed = "LEFT"
             elif event.key == pygame.K_s:
-                self.player.move_down()
+                self.player.key_pressed = "DOWN"
             elif event.key == pygame.K_w:
-                self.player.move_up()
+                self.player.key_pressed = "UP"
             elif event.key == pygame.K_p:
                 self.game.set_scene(self.game.PAUSE_SCENE_INDEX)
 
@@ -197,6 +199,34 @@ class MainScene(BaseScene):
             for item in self.ghosts:
                 item.move(self.player.is_frightened)
 
+    def player_rotations_logic(self):
+        Up, Down, Left, Right = False, False, False, False
+        for crossroad in self.crossroads:
+            if crossroad.neighbours[1] is not None and self.player.mid_x == crossroad.x and self.player.mid_y == crossroad.y:
+                Up = True
+            if crossroad.neighbours[0] is not None and self.player.mid_x == crossroad.x and self.player.mid_y == crossroad.y:
+                Right = True
+            if crossroad.neighbours[2] is not None and self.player.mid_x == crossroad.x and self.player.mid_y == crossroad.y:
+                Left = True
+            if crossroad.neighbours[3] is not None and self.player.mid_x == crossroad.x and self.player.mid_y == crossroad.y:
+                Down = True
+        if Up == True and self.player.key_pressed == "UP":
+            self.player.move_up()
+            Up = False
+            self.player.key_pressed = "NO"
+        elif Right == True and self.player.key_pressed == "RIGHT":
+            self.player.move_right()
+            Right = False
+            self.player.key_pressed = "NO"
+        elif Left is True and self.player.key_pressed == "LEFT":
+            self.player.move_left()
+            Left = False
+            self.player.key_pressed = "NO"
+        elif Down is True and self.player.key_pressed == "DOWN":
+            self.player.move_down()
+            Down = False
+            self.player.key_pressed = "NO"
+
     def check_player_collisions(self):
         for item in self.objects:
             self.player.collides_with(item)
@@ -205,5 +235,8 @@ class MainScene(BaseScene):
         self.check_game_over()
         self.check_player_collisions()
         self.ghosts_logic()
+        self.player.mid_x = self.player.rect.x + 25
+        self.player.mid_y = self.player.rect.y + 25
+        self.player_rotations_logic()
         if self.player.is_dead:
             self.move_to_spawn()

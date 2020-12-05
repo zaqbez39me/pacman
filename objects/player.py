@@ -30,8 +30,8 @@ class Player:
         self.game = game
         self.score = 0
         self.img = pg.image.load(drawing)
-        self.width = 45
-        self.height = 45
+        self.width = 50
+        self.height = 50
         self.img = pg.transform.scale(self.img, (self.width, self.height))
         self.rect = self.img.get_rect()
         self.speed_x = 0
@@ -55,6 +55,9 @@ class Player:
         self.write = open("high_scores/high_scores.txt", "a")
         self.highest_score = 0
         self.find_highest_score()
+        self.mid_x = self.rect.x + 25
+        self.mid_y = self.rect.y + 25
+        self.key_pressed = "NO"
 
     def move_right(self):
         if self.rect.x < 780 - self.width:
