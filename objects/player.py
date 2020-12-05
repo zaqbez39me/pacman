@@ -118,7 +118,7 @@ class Player:
                     self.score += 10
                 else:
                     self.score += obj.kill_cost
-                    obj.respawn()
+                    obj.die()
         elif isinstance(obj, Energizer):
             if obj.stay and self.check_collision(obj.rect):
                 self.is_frightened = False
